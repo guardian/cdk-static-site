@@ -1,0 +1,18 @@
+regions:
+  - us-east-1
+stacks:
+  - playground
+deployments:
+  cdk-static-site-cfn:
+    type: cloud-formation
+    app: cdk-static-site-demo
+    parameters:
+      templatePath: StaticSite.template.json
+
+  cdk-static-site-upload:
+    type: aws-s3
+    parameters:
+      bucket: TBD
+      prefixStack: false
+      cacheControl: private
+      publicReadAcl: false

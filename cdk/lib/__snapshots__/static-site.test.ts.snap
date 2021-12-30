@@ -1,0 +1,262 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The StaticSite stack matches the snapshot 1`] = `
+Object {
+  "Outputs": Object {
+    "OriginBucketNameStaticsitedemo": Object {
+      "Description": "S3 bucket origin for CloudFront.",
+      "Value": Object {
+        "Ref": "OriginBucketStaticsitedemoEA6153AF",
+      },
+    },
+  },
+  "Resources": Object {
+    "CertificateStaticsitedemo0044D4E8": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "DomainName": "banana.dev-gutools.co.uk",
+        "Tags": Array [
+          Object {
+            "Key": "App",
+            "Value": "static-site-demo",
+          },
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/cdk-static-site",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "playground",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "INFRA",
+          },
+        ],
+        "ValidationMethod": "DNS",
+      },
+      "Type": "AWS::CertificateManager::Certificate",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "CloudFrontOriginAccessIdentityStaticsitedemo3C9F3BAE": Object {
+      "Properties": Object {
+        "CloudFrontOriginAccessIdentityConfig": Object {
+          "Comment": "Origin Access Identity for static-site-demo INFRA",
+        },
+      },
+      "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+    },
+    "DnsRecordStaticsitedemo": Object {
+      "Properties": Object {
+        "Name": "banana.dev-gutools.co.uk",
+        "RecordType": "CNAME",
+        "ResourceRecords": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "StaticSiteStaticsitedemoCFDistributionE9DEFEF7",
+              "DomainName",
+            ],
+          },
+        ],
+        "Stage": "INFRA",
+        "TTL": 3600,
+      },
+      "Type": "Guardian::DNS::RecordSet",
+    },
+    "OriginBucketStaticsitedemoEA6153AF": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "PublicAccessBlockConfiguration": Object {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": Array [
+          Object {
+            "Key": "App",
+            "Value": "static-site-demo",
+          },
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/cdk-static-site",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "playground",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "INFRA",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "OriginBucketStaticsitedemoPolicy982E247D": Object {
+      "Properties": Object {
+        "Bucket": Object {
+          "Ref": "OriginBucketStaticsitedemoEA6153AF",
+        },
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "s3:GetObject",
+              "Effect": "Allow",
+              "Principal": Object {
+                "CanonicalUser": Object {
+                  "Fn::GetAtt": Array [
+                    "CloudFrontOriginAccessIdentityStaticsitedemo3C9F3BAE",
+                    "S3CanonicalUserId",
+                  ],
+                },
+              },
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    Object {
+                      "Fn::GetAtt": Array [
+                        "OriginBucketStaticsitedemoEA6153AF",
+                        "Arn",
+                      ],
+                    },
+                    "/INFRA/static-site-demo/*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": "s3:GetObject",
+              "Effect": "Allow",
+              "Principal": Object {
+                "CanonicalUser": Object {
+                  "Fn::GetAtt": Array [
+                    "CloudFrontOriginAccessIdentityStaticsitedemo3C9F3BAE",
+                    "S3CanonicalUserId",
+                  ],
+                },
+              },
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    Object {
+                      "Fn::GetAtt": Array [
+                        "OriginBucketStaticsitedemoEA6153AF",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "StaticSiteStaticsitedemoCFDistributionE9DEFEF7": Object {
+      "Properties": Object {
+        "DistributionConfig": Object {
+          "Aliases": Array [
+            "banana.dev-gutools.co.uk",
+          ],
+          "Comment": "CloudFront distribution for static-site-demo INFRA",
+          "DefaultCacheBehavior": Object {
+            "AllowedMethods": Array [
+              "GET",
+              "HEAD",
+            ],
+            "CachedMethods": Array [
+              "GET",
+              "HEAD",
+            ],
+            "Compress": true,
+            "ForwardedValues": Object {
+              "Cookies": Object {
+                "Forward": "none",
+              },
+              "QueryString": false,
+            },
+            "TargetOriginId": "origin1",
+            "ViewerProtocolPolicy": "redirect-to-https",
+          },
+          "DefaultRootObject": "index.html",
+          "Enabled": true,
+          "HttpVersion": "http2",
+          "IPV6Enabled": true,
+          "Origins": Array [
+            Object {
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "DomainName": Object {
+                "Fn::GetAtt": Array [
+                  "OriginBucketStaticsitedemoEA6153AF",
+                  "RegionalDomainName",
+                ],
+              },
+              "Id": "origin1",
+              "OriginPath": "/INFRA/static-site-demo",
+              "S3OriginConfig": Object {
+                "OriginAccessIdentity": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "origin-access-identity/cloudfront/",
+                      Object {
+                        "Ref": "CloudFrontOriginAccessIdentityStaticsitedemo3C9F3BAE",
+                      },
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "PriceClass": "PriceClass_100",
+          "ViewerCertificate": Object {
+            "AcmCertificateArn": Object {
+              "Ref": "CertificateStaticsitedemo0044D4E8",
+            },
+            "SslSupportMethod": "sni-only",
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "App",
+            "Value": "static-site-demo",
+          },
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/cdk-static-site",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "playground",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "INFRA",
+          },
+        ],
+      },
+      "Type": "AWS::CloudFront::Distribution",
+    },
+  },
+}
+`;

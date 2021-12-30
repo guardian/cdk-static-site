@@ -1,0 +1,32 @@
+name: CI
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+      - uses: guardian/actions-assume-aws-role@v1
+        with:
+          awsRoleToAssume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+      - uses: actions/setup-node@v2.5.0
+        with:
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            cdk/package-lock.json
+          node-version-file: '.nvmrc'
+      - run: |
+          (
+            cd cdk
+            ./script/ci
+          )
+          npm ci
+          npm run riffRaffUpload

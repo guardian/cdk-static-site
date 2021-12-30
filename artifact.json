@@ -1,0 +1,16 @@
+{
+  "projectName": "devx::cdk-static-site",
+  "vcsURL": "https://github.com/guardian/cdk-static-site",
+  "actions": [
+    {
+      "action": "cdk-static-site-cfn",
+      "path": "cdk/cdk.out/StaticSite.template.json",
+      "compress": false
+    },
+    {
+      "action": "cdk-static-site-upload",
+      "path": "app",
+      "compress": false
+    }
+  ]
+}
