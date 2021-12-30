@@ -1,5 +1,5 @@
 regions:
-  - us-east-1
+  - eu-west-1
 stacks:
   - playground
 deployments:
@@ -12,7 +12,7 @@ deployments:
   cdk-static-site-upload:
     type: aws-s3
     parameters:
-      bucket: TBD
+      bucket: gucdk-static-site-demo-origin
       prefixStack: false
       cacheControl: private
       publicReadAcl: false

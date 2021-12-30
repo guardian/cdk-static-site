@@ -11,37 +11,6 @@ Object {
     },
   },
   "Resources": Object {
-    "CertificateStaticsitedemo0044D4E8": Object {
-      "DeletionPolicy": "Retain",
-      "Properties": Object {
-        "DomainName": "banana.dev-gutools.co.uk",
-        "Tags": Array [
-          Object {
-            "Key": "App",
-            "Value": "static-site-demo",
-          },
-          Object {
-            "Key": "gu:cdk:version",
-            "Value": "TEST",
-          },
-          Object {
-            "Key": "gu:repo",
-            "Value": "guardian/cdk-static-site",
-          },
-          Object {
-            "Key": "Stack",
-            "Value": "playground",
-          },
-          Object {
-            "Key": "Stage",
-            "Value": "INFRA",
-          },
-        ],
-        "ValidationMethod": "DNS",
-      },
-      "Type": "AWS::CertificateManager::Certificate",
-      "UpdateReplacePolicy": "Retain",
-    },
     "CloudFrontOriginAccessIdentityStaticsitedemo3C9F3BAE": Object {
       "Properties": Object {
         "CloudFrontOriginAccessIdentityConfig": Object {
@@ -70,6 +39,7 @@ Object {
     "OriginBucketStaticsitedemoEA6153AF": Object {
       "DeletionPolicy": "Retain",
       "Properties": Object {
+        "BucketName": "gucdk-static-site-demo-origin",
         "PublicAccessBlockConfiguration": Object {
           "BlockPublicAcls": true,
           "BlockPublicPolicy": true,
@@ -227,7 +197,16 @@ Object {
           "PriceClass": "PriceClass_100",
           "ViewerCertificate": Object {
             "AcmCertificateArn": Object {
-              "Ref": "CertificateStaticsitedemo0044D4E8",
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "arn:aws:acm:us-east-1:",
+                  Object {
+                    "Ref": "AWS::AccountId",
+                  },
+                  ":certificate/de291190-d1c4-4501-97d5-d2d04e96486a",
+                ],
+              ],
             },
             "SslSupportMethod": "sni-only",
           },

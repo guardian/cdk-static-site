@@ -15,6 +15,10 @@ export class StaticSite extends GuStackForInfrastructure {
           domainName: "banana.dev-gutools.co.uk",
         },
       },
+      bucketName: "gucdk-static-site-demo-origin",
+      preExistingCertificateArn: {
+        [StageForInfrastructure]: `arn:aws:acm:us-east-1:${this.account}:certificate/de291190-d1c4-4501-97d5-d2d04e96486a`,
+      },
     });
   }
 }
