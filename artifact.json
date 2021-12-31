@@ -8,7 +8,7 @@
       "compress": false
     },
     {
-      "action": "cdk-static-site-upload",
+      "action": "static-site-demo",
       "path": "app",
       "compress": false
     }

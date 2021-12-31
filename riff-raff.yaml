@@ -9,7 +9,7 @@ deployments:
     parameters:
       templatePath: StaticSite.template.json
 
-  cdk-static-site-upload:
+  static-site-demo:
     type: aws-s3
     parameters:
       bucket: gucdk-static-site-demo-origin
