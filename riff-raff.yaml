@@ -15,4 +15,3 @@ deployments:
       bucket: gucdk-static-site-demo-origin
       prefixStack: false
       cacheControl: private
-      publicReadAcl: false
